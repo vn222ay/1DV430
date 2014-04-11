@@ -1,0 +1,503 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7750C83518F8532D008F53DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83418F8532D008F53DA /* Foundation.framework */; };
+		7750C83718F8532D008F53DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83618F8532D008F53DA /* CoreGraphics.framework */; };
+		7750C83918F8532D008F53DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83818F8532D008F53DA /* UIKit.framework */; };
+		7750C83B18F8532D008F53DA /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83A18F8532D008F53DA /* SpriteKit.framework */; };
+		7750C84118F8532D008F53DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7750C83F18F8532D008F53DA /* InfoPlist.strings */; };
+		7750C84318F8532D008F53DA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C84218F8532D008F53DA /* main.m */; };
+		7750C84718F8532D008F53DA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C84618F8532D008F53DA /* AppDelegate.m */; };
+		7750C84A18F8532D008F53DA /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7750C84818F8532D008F53DA /* Main_iPhone.storyboard */; };
+		7750C84D18F8532D008F53DA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7750C84B18F8532D008F53DA /* Main_iPad.storyboard */; };
+		7750C85018F8532D008F53DA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C84F18F8532D008F53DA /* ViewController.m */; };
+		7750C85318F8532D008F53DA /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C85218F8532D008F53DA /* MyScene.m */; };
+		7750C85518F8532D008F53DA /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 7750C85418F8532D008F53DA /* Spaceship.png */; };
+		7750C85718F8532D008F53DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7750C85618F8532D008F53DA /* Images.xcassets */; };
+		7750C85E18F8532D008F53DA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C85D18F8532D008F53DA /* XCTest.framework */; };
+		7750C85F18F8532D008F53DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83418F8532D008F53DA /* Foundation.framework */; };
+		7750C86018F8532D008F53DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83818F8532D008F53DA /* UIKit.framework */; };
+		7750C86818F8532D008F53DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7750C86618F8532D008F53DA /* InfoPlist.strings */; };
+		7750C86A18F8532D008F53DA /* CenteyeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C86918F8532D008F53DA /* CenteyeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7750C86118F8532D008F53DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7750C82918F8532D008F53DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7750C83018F8532D008F53DA;
+			remoteInfo = Centeye;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7750C83118F8532D008F53DA /* Centeye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centeye.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7750C83418F8532D008F53DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7750C83618F8532D008F53DA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7750C83818F8532D008F53DA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7750C83A18F8532D008F53DA /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		7750C83E18F8532D008F53DA /* Centeye-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Centeye-Info.plist"; sourceTree = "<group>"; };
+		7750C84018F8532D008F53DA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7750C84218F8532D008F53DA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7750C84418F8532D008F53DA /* Centeye-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Centeye-Prefix.pch"; sourceTree = "<group>"; };
+		7750C84518F8532D008F53DA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7750C84618F8532D008F53DA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7750C84918F8532D008F53DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		7750C84C18F8532D008F53DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		7750C84E18F8532D008F53DA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7750C84F18F8532D008F53DA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7750C85118F8532D008F53DA /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
+		7750C85218F8532D008F53DA /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
+		7750C85418F8532D008F53DA /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		7750C85618F8532D008F53DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7750C85C18F8532D008F53DA /* CenteyeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CenteyeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7750C85D18F8532D008F53DA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7750C86518F8532D008F53DA /* CenteyeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CenteyeTests-Info.plist"; sourceTree = "<group>"; };
+		7750C86718F8532D008F53DA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7750C86918F8532D008F53DA /* CenteyeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenteyeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7750C82E18F8532D008F53DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C83718F8532D008F53DA /* CoreGraphics.framework in Frameworks */,
+				7750C83918F8532D008F53DA /* UIKit.framework in Frameworks */,
+				7750C83B18F8532D008F53DA /* SpriteKit.framework in Frameworks */,
+				7750C83518F8532D008F53DA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7750C85918F8532D008F53DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C85E18F8532D008F53DA /* XCTest.framework in Frameworks */,
+				7750C86018F8532D008F53DA /* UIKit.framework in Frameworks */,
+				7750C85F18F8532D008F53DA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7750C82818F8532D008F53DA = {
+			isa = PBXGroup;
+			children = (
+				7750C83C18F8532D008F53DA /* Centeye */,
+				7750C86318F8532D008F53DA /* CenteyeTests */,
+				7750C83318F8532D008F53DA /* Frameworks */,
+				7750C83218F8532D008F53DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7750C83218F8532D008F53DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7750C83118F8532D008F53DA /* Centeye.app */,
+				7750C85C18F8532D008F53DA /* CenteyeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7750C83318F8532D008F53DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7750C83418F8532D008F53DA /* Foundation.framework */,
+				7750C83618F8532D008F53DA /* CoreGraphics.framework */,
+				7750C83818F8532D008F53DA /* UIKit.framework */,
+				7750C83A18F8532D008F53DA /* SpriteKit.framework */,
+				7750C85D18F8532D008F53DA /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7750C83C18F8532D008F53DA /* Centeye */ = {
+			isa = PBXGroup;
+			children = (
+				7750C84518F8532D008F53DA /* AppDelegate.h */,
+				7750C84618F8532D008F53DA /* AppDelegate.m */,
+				7750C84818F8532D008F53DA /* Main_iPhone.storyboard */,
+				7750C84B18F8532D008F53DA /* Main_iPad.storyboard */,
+				7750C84E18F8532D008F53DA /* ViewController.h */,
+				7750C84F18F8532D008F53DA /* ViewController.m */,
+				7750C85118F8532D008F53DA /* MyScene.h */,
+				7750C85218F8532D008F53DA /* MyScene.m */,
+				7750C85418F8532D008F53DA /* Spaceship.png */,
+				7750C85618F8532D008F53DA /* Images.xcassets */,
+				7750C83D18F8532D008F53DA /* Supporting Files */,
+			);
+			path = Centeye;
+			sourceTree = "<group>";
+		};
+		7750C83D18F8532D008F53DA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7750C83E18F8532D008F53DA /* Centeye-Info.plist */,
+				7750C83F18F8532D008F53DA /* InfoPlist.strings */,
+				7750C84218F8532D008F53DA /* main.m */,
+				7750C84418F8532D008F53DA /* Centeye-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7750C86318F8532D008F53DA /* CenteyeTests */ = {
+			isa = PBXGroup;
+			children = (
+				7750C86918F8532D008F53DA /* CenteyeTests.m */,
+				7750C86418F8532D008F53DA /* Supporting Files */,
+			);
+			path = CenteyeTests;
+			sourceTree = "<group>";
+		};
+		7750C86418F8532D008F53DA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7750C86518F8532D008F53DA /* CenteyeTests-Info.plist */,
+				7750C86618F8532D008F53DA /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7750C83018F8532D008F53DA /* Centeye */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7750C86D18F8532D008F53DA /* Build configuration list for PBXNativeTarget "Centeye" */;
+			buildPhases = (
+				7750C82D18F8532D008F53DA /* Sources */,
+				7750C82E18F8532D008F53DA /* Frameworks */,
+				7750C82F18F8532D008F53DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Centeye;
+			productName = Centeye;
+			productReference = 7750C83118F8532D008F53DA /* Centeye.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7750C85B18F8532D008F53DA /* CenteyeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7750C87018F8532D008F53DA /* Build configuration list for PBXNativeTarget "CenteyeTests" */;
+			buildPhases = (
+				7750C85818F8532D008F53DA /* Sources */,
+				7750C85918F8532D008F53DA /* Frameworks */,
+				7750C85A18F8532D008F53DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7750C86218F8532D008F53DA /* PBXTargetDependency */,
+			);
+			name = CenteyeTests;
+			productName = CenteyeTests;
+			productReference = 7750C85C18F8532D008F53DA /* CenteyeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7750C82918F8532D008F53DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Viktor Nilsson";
+				TargetAttributes = {
+					7750C85B18F8532D008F53DA = {
+						TestTargetID = 7750C83018F8532D008F53DA;
+					};
+				};
+			};
+			buildConfigurationList = 7750C82C18F8532D008F53DA /* Build configuration list for PBXProject "Centeye" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7750C82818F8532D008F53DA;
+			productRefGroup = 7750C83218F8532D008F53DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7750C83018F8532D008F53DA /* Centeye */,
+				7750C85B18F8532D008F53DA /* CenteyeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7750C82F18F8532D008F53DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C85518F8532D008F53DA /* Spaceship.png in Resources */,
+				7750C85718F8532D008F53DA /* Images.xcassets in Resources */,
+				7750C84D18F8532D008F53DA /* Main_iPad.storyboard in Resources */,
+				7750C84A18F8532D008F53DA /* Main_iPhone.storyboard in Resources */,
+				7750C84118F8532D008F53DA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7750C85A18F8532D008F53DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C86818F8532D008F53DA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7750C82D18F8532D008F53DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C85318F8532D008F53DA /* MyScene.m in Sources */,
+				7750C85018F8532D008F53DA /* ViewController.m in Sources */,
+				7750C84718F8532D008F53DA /* AppDelegate.m in Sources */,
+				7750C84318F8532D008F53DA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7750C85818F8532D008F53DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7750C86A18F8532D008F53DA /* CenteyeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7750C86218F8532D008F53DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7750C83018F8532D008F53DA /* Centeye */;
+			targetProxy = 7750C86118F8532D008F53DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7750C83F18F8532D008F53DA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7750C84018F8532D008F53DA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7750C84818F8532D008F53DA /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7750C84918F8532D008F53DA /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		7750C84B18F8532D008F53DA /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7750C84C18F8532D008F53DA /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		7750C86618F8532D008F53DA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7750C86718F8532D008F53DA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7750C86B18F8532D008F53DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7750C86C18F8532D008F53DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7750C86E18F8532D008F53DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
+				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7750C86F18F8532D008F53DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
+				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7750C87118F8532D008F53DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Centeye.app/Centeye";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "CenteyeTests/CenteyeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		7750C87218F8532D008F53DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Centeye.app/Centeye";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
+				INFOPLIST_FILE = "CenteyeTests/CenteyeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7750C82C18F8532D008F53DA /* Build configuration list for PBXProject "Centeye" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7750C86B18F8532D008F53DA /* Debug */,
+				7750C86C18F8532D008F53DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7750C86D18F8532D008F53DA /* Build configuration list for PBXNativeTarget "Centeye" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7750C86E18F8532D008F53DA /* Debug */,
+				7750C86F18F8532D008F53DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7750C87018F8532D008F53DA /* Build configuration list for PBXNativeTarget "CenteyeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7750C87118F8532D008F53DA /* Debug */,
+				7750C87218F8532D008F53DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7750C82918F8532D008F53DA /* Project object */;
+}

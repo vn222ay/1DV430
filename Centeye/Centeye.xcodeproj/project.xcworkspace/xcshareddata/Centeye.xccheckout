@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>53192C8B-AA54-4346-93FB-E773A2A41F0F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Centeye</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0AABA26B-C1FC-40FE-85A1-6F5A961F7B0D</key>
+		<string>https://github.com/vn222ay/1DV430.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Centeye/Centeye.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0AABA26B-C1FC-40FE-85A1-6F5A961F7B0D</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/vn222ay/1DV430.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0AABA26B-C1FC-40FE-85A1-6F5A961F7B0D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0AABA26B-C1FC-40FE-85A1-6F5A961F7B0D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>1DV430</string>
+		</dict>
+	</array>
+</dict>
+</plist>
