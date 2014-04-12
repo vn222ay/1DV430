@@ -7,11 +7,14 @@
 //
 
 #import "MyScene.h"
+#import "Player.h"
+#import "Map.h"
+
 
 @interface MyScene ()
 
-@property (strong, nonatomic) SKShapeNode *ballBorder;
-@property (strong, nonatomic) NSMutableArray *ballsTouched;
+@property (strong, nonatomic) NSMutableArray *players;
+@property (strong, nonatomic) Map *map;
 
 @end
 
@@ -23,7 +26,7 @@
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        
+
 
     }
     return self;
@@ -31,20 +34,45 @@
 
 - (void)didMoveToView:(SKView *)view {
     //UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
-    [self initPlayerArea];
+    //[self initPlayerArea];
     //[self initPlayfield];
+    self.map = [[Map alloc] initWithSize:self.view.bounds.size];
+    [self addChild:self.map];
 
 }
-
+/*
 -(void)initPlayerArea {
-    //Player 1
+    NSLog(@"Init Player Area");
+    self.playCorner = [[NSMutableArray alloc] init];
+    
     SKShapeNode *playerArea = [SKShapeNode node];
-    playerArea = [SKShapeNode node];
     playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.view.bounds.size.width/2, self.view.bounds.size.height/2)].CGPath;
     playerArea.fillColor = [UIColor greenColor];
-    [self addChild:playerArea];
-}
+    [self.playCorner addObject:playerArea];
+    
+    playerArea = [SKShapeNode node];
+    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.view.bounds.size.width/2, 0, self.view.bounds.size.width, self.view.bounds.size.height/2)].CGPath;
+    playerArea.fillColor = [UIColor yellowColor];
+    [self.playCorner addObject:playerArea];
+    
+    playerArea = [SKShapeNode node];
+    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width/2, self.view.bounds.size.height)].CGPath;
+    playerArea.fillColor = [UIColor blueColor];
+    [self.playCorner addObject:playerArea];
+    
+    playerArea = [SKShapeNode node];
+    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height)].CGPath;
+    playerArea.fillColor = [UIColor orangeColor];
+    [self.playCorner addObject:playerArea];
+    
+    for (SKShapeNode *shape in self.playCorner) {
+        NSLog(@"s");
+        [self addChild:shape];
+    }
 
+}
+ */
+/*
 -(void)initPlayfield {
     
     //Add outer circle
@@ -52,7 +80,7 @@
     outerCircle = [SKShapeNode node];
     outerCircle.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)].CGPath;
     outerCircle.fillColor = [UIColor whiteColor];
-    self.ballBorder = outerCircle;
+    self.restrictedArea = outerCircle.path;
     [self addChild:outerCircle];
     
     SKShapeNode *middleCircle = [SKShapeNode node];
@@ -71,6 +99,7 @@
 -(CGRect)circleInMiddle:(int)radius {
     return CGRectMake(self.view.bounds.size.width/2-radius, self.view.bounds.size.height/2-radius, radius*2, radius*2);
 }
+*/
 /*
 - (void)handlePanFrom:(UIPanGestureRecognizer *)recognizer {
     NSLog(@"H");
@@ -92,7 +121,7 @@
         CGPoint touchLocation = [touch locationInNode:self];
         touchLocation = [self convertPointFromView:touchLocation];
         
-        if (CGPathContainsPoint(self.ballBorder.path, nil, touchLocation, false)) {
+        if (CGPathContainsPoint(self.map.restrictedArea, nil, touchLocation, false)) {
             NSLog(@"IN!");
             return;
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7750B9FC18F914160048F42C /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750B9FB18F914160048F42C /* Map.m */; };
 		7750C83518F8532D008F53DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83418F8532D008F53DA /* Foundation.framework */; };
 		7750C83718F8532D008F53DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83618F8532D008F53DA /* CoreGraphics.framework */; };
 		7750C83918F8532D008F53DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83818F8532D008F53DA /* UIKit.framework */; };
@@ -25,6 +26,8 @@
 		7750C86018F8532D008F53DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83818F8532D008F53DA /* UIKit.framework */; };
 		7750C86818F8532D008F53DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7750C86618F8532D008F53DA /* InfoPlist.strings */; };
 		7750C86A18F8532D008F53DA /* CenteyeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C86918F8532D008F53DA /* CenteyeTests.m */; };
+		77A54CB618F878FF00D8F691 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A54CB518F878FF00D8F691 /* Player.m */; };
+		77A54CB918F883B200D8F691 /* PlayCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A54CB818F883B200D8F691 /* PlayCorner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7750B9FA18F914160048F42C /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		7750B9FB18F914160048F42C /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		7750C83118F8532D008F53DA /* Centeye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centeye.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7750C83418F8532D008F53DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7750C83618F8532D008F53DA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,6 +67,10 @@
 		7750C86518F8532D008F53DA /* CenteyeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CenteyeTests-Info.plist"; sourceTree = "<group>"; };
 		7750C86718F8532D008F53DA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7750C86918F8532D008F53DA /* CenteyeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenteyeTests.m; sourceTree = "<group>"; };
+		77A54CB418F878FF00D8F691 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		77A54CB518F878FF00D8F691 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		77A54CB718F883B200D8F691 /* PlayCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayCorner.h; sourceTree = "<group>"; };
+		77A54CB818F883B200D8F691 /* PlayCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayCorner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +143,12 @@
 				7750C85418F8532D008F53DA /* Spaceship.png */,
 				7750C85618F8532D008F53DA /* Images.xcassets */,
 				7750C83D18F8532D008F53DA /* Supporting Files */,
+				77A54CB418F878FF00D8F691 /* Player.h */,
+				77A54CB518F878FF00D8F691 /* Player.m */,
+				77A54CB718F883B200D8F691 /* PlayCorner.h */,
+				77A54CB818F883B200D8F691 /* PlayCorner.m */,
+				7750B9FA18F914160048F42C /* Map.h */,
+				7750B9FB18F914160048F42C /* Map.m */,
 			);
 			path = Centeye;
 			sourceTree = "<group>";
@@ -267,9 +282,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7750C85318F8532D008F53DA /* MyScene.m in Sources */,
+				7750B9FC18F914160048F42C /* Map.m in Sources */,
 				7750C85018F8532D008F53DA /* ViewController.m in Sources */,
+				77A54CB918F883B200D8F691 /* PlayCorner.m in Sources */,
 				7750C84718F8532D008F53DA /* AppDelegate.m in Sources */,
 				7750C84318F8532D008F53DA /* main.m in Sources */,
+				77A54CB618F878FF00D8F691 /* Player.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
