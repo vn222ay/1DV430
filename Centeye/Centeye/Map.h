@@ -11,5 +11,5 @@
 @interface Map : SKNode
 @property CGPathRef restrictedArea;
 -(SKNode *)initWithSize:(CGSize)rectSize;
-
+-(BOOL)shouldRelease:(CGPoint)position;
 @end

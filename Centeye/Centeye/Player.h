@@ -21,4 +21,5 @@
 -(void)activateBall:(SKShapeNode *)newBall;
 -(void)consumeBall;
 
+
 @end

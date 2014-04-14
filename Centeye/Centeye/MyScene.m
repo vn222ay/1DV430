@@ -98,32 +98,27 @@
     
     CGPoint touchLocation = [recognizer locationInView:recognizer.view];
     touchLocation = [self convertPointFromView:touchLocation];
-    //SKShapeNode *node = (SKShapeNode *)[self nodeAtPoint:touchLocation];
     
-    //TODO!!! Fixa så att alla bollas släpps när de dras utanför ens område. Kanske kolla alla aktiva bollar om de är innanför, i så fall gör som vanligt, annars om utanför, släpp alla dessa. Ska bara göras när touchevent är Changed, inte Ended (?)
     for (Player *player in self.players) {
         if ([player isInArea:touchLocation]) {
-        if (recognizer.state == UIGestureRecognizerStateChanged) {
-            if ([player isInArea:touchLocation] && [player hasActiveBall]) {
+            if (recognizer.state == UIGestureRecognizerStateChanged) {
                 player.activeBall.position = touchLocation;
+                if ([self.map shouldRelease:touchLocation]) {
+                    //Fortfarande inom spelarens område men kommt in på förbjuden mark => släpp!
+                    CGPoint velocity = [recognizer velocityInView:recognizer.view];
+                    [self performBallActionsForPlayer:player withVelocity:velocity];
+                }
             }
-            else if (![player isInArea:touchLocation] && [player hasActiveBall]) {
+            //Touch upphört och rörd boll ska släppas (ej inne på förbjuden mark)
+            else if (recognizer.state == UIGestureRecognizerStateEnded && [player hasActiveBall]) {
+                //TODO: Outside border-issue?
                 CGPoint velocity = [recognizer velocityInView:recognizer.view];
                 [self performBallActionsForPlayer:player withVelocity:velocity];
             }
         }
-        
-        else if (recognizer.state == UIGestureRecognizerStateEnded && [player hasActiveBall]) {
-
-            
-            //TODO: Outside border-issue?
-            CGPoint velocity = [recognizer velocityInView:recognizer.view];
-            [self performBallActionsForPlayer:player withVelocity:velocity];
-
-        }
-        }
     }
 }
+
 
 -(void)performBallActionsForPlayer:(Player *)player withVelocity:(CGPoint)velocity {
     [self applyForce:velocity affectedNode:player.activeBall];

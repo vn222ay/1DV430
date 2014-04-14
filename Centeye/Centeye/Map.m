@@ -79,6 +79,10 @@
     return self;
 }
 
+-(BOOL)shouldRelease:(CGPoint)position {
+    return CGPathContainsPoint(self.restrictedArea, nil, position, NO);
+}
+
 -(CGRect)circleInMiddle:(int)radius {
     return CGRectMake(self.viewSize.width/2-radius, self.viewSize.height/2-radius, radius*2, radius*2);
 }
