@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic) NSMutableArray *players;
 @property (strong, nonatomic) Map *map;
+@property CFTimeInterval lastTime;
+@property CFTimeInterval delta;
 
 @end
 
@@ -27,131 +29,169 @@
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
 
-
     }
     return self;
 }
 
 - (void)didMoveToView:(SKView *)view {
-    //UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
-    //[self initPlayerArea];
-    //[self initPlayfield];
+    UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
+    [[self view] addGestureRecognizer:gestureRecognizer];
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.physicsWorld.gravity = CGVectorMake(0, 0);
+    self.physicsBody.friction = 0;
+    self.physicsBody.linearDamping = 0;
+    self.physicsWorld.contactDelegate = self;
+
+    
+    self.players = [[NSMutableArray alloc] init];
     self.map = [[Map alloc] initWithSize:self.view.bounds.size];
     [self addChild:self.map];
-
+    
+    Player *player1 = [[Player alloc] init];
+    player1.playerArea = CGRectMake(0, 0, 300, 300);
+    player1.ballStartPoint = CGPointMake(55, 55);
+    [self.players addObject:player1];
+    [self giveBallToPlayer:player1];
+    
+    Player *player2 = [[Player alloc] init];
+    player2.playerArea = CGRectMake(0, self.view.bounds.size.height-300, 300, self.view.bounds.size.height);
+    player2.ballStartPoint = CGPointMake(55, self.view.bounds.size.height-55);
+    [self.players addObject:player2];
+    [self giveBallToPlayer:player2];
 }
-/*
--(void)initPlayerArea {
-    NSLog(@"Init Player Area");
-    self.playCorner = [[NSMutableArray alloc] init];
-    
-    SKShapeNode *playerArea = [SKShapeNode node];
-    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.view.bounds.size.width/2, self.view.bounds.size.height/2)].CGPath;
-    playerArea.fillColor = [UIColor greenColor];
-    [self.playCorner addObject:playerArea];
-    
-    playerArea = [SKShapeNode node];
-    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.view.bounds.size.width/2, 0, self.view.bounds.size.width, self.view.bounds.size.height/2)].CGPath;
-    playerArea.fillColor = [UIColor yellowColor];
-    [self.playCorner addObject:playerArea];
-    
-    playerArea = [SKShapeNode node];
-    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width/2, self.view.bounds.size.height)].CGPath;
-    playerArea.fillColor = [UIColor blueColor];
-    [self.playCorner addObject:playerArea];
-    
-    playerArea = [SKShapeNode node];
-    playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height)].CGPath;
-    playerArea.fillColor = [UIColor orangeColor];
-    [self.playCorner addObject:playerArea];
-    
-    for (SKShapeNode *shape in self.playCorner) {
-        NSLog(@"s");
-        [self addChild:shape];
+
+-(void)giveBallToPlayer:(Player *)player {
+    if (player.hasBalls) {
+        [player consumeBall];
+        SKShapeNode *ball = [self createBallWithPosition:player.ballStartPoint];
+        [player activateBall:ball];
+        [self addChild:player.activeBall];
     }
-
-}
- */
-/*
--(void)initPlayfield {
-    
-    //Add outer circle
-    SKShapeNode *outerCircle = [SKShapeNode node];
-    outerCircle = [SKShapeNode node];
-    outerCircle.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)].CGPath;
-    outerCircle.fillColor = [UIColor whiteColor];
-    self.restrictedArea = outerCircle.path;
-    [self addChild:outerCircle];
-    
-    SKShapeNode *middleCircle = [SKShapeNode node];
-    middleCircle = [SKShapeNode node];
-    middleCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:200]].CGPath;
-    middleCircle.fillColor = [UIColor grayColor];
-    [self addChild:middleCircle];
-    
-    SKShapeNode *innerCircle = [SKShapeNode node];
-    innerCircle = [SKShapeNode node];
-    innerCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:50]].CGPath;
-    innerCircle.fillColor = [UIColor blackColor];
-    [self addChild:innerCircle];
+    else {
+        NSLog(@"Inga bollar kvar");
+    }
 }
 
--(CGRect)circleInMiddle:(int)radius {
-    return CGRectMake(self.view.bounds.size.width/2-radius, self.view.bounds.size.height/2-radius, radius*2, radius*2);
+
+-(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint {
+    SKShapeNode *newBall = [[SKShapeNode alloc] init];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path, NULL, 0, 0, 30, 0.0, (2 * M_PI), NO);
+    newBall.path = path;
+    newBall.fillColor = [UIColor grayColor];
+    newBall.name = @"ball";
+    newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:30];
+    newBall.physicsBody.dynamic = YES;
+    newBall.physicsBody.affectedByGravity = NO;
+    newBall.position = startPoint;
+    
+    newBall.physicsBody.linearDamping = 0.6;
+    newBall.physicsBody.restitution = 0.6;
+    newBall.physicsBody.friction = 0.2;
+    
+    return newBall;
 }
-*/
-/*
+
+/* --- Touch Events Begin --- */
+
 - (void)handlePanFrom:(UIPanGestureRecognizer *)recognizer {
-    NSLog(@"H");
+    
     CGPoint touchLocation = [recognizer locationInView:recognizer.view];
     touchLocation = [self convertPointFromView:touchLocation];
+    //SKShapeNode *node = (SKShapeNode *)[self nodeAtPoint:touchLocation];
     
-    if (CGPathContainsPoint(self.ballBorder.path, nil, touchLocation, false)) {
-        NSLog(@"We got something");
-        return;
+    //TODO!!! Fixa så att alla bollas släpps när de dras utanför ens område. Kanske kolla alla aktiva bollar om de är innanför, i så fall gör som vanligt, annars om utanför, släpp alla dessa. Ska bara göras när touchevent är Changed, inte Ended (?)
+    for (Player *player in self.players) {
+        if ([player isInArea:touchLocation]) {
+        if (recognizer.state == UIGestureRecognizerStateChanged) {
+            if ([player isInArea:touchLocation] && [player hasActiveBall]) {
+                player.activeBall.position = touchLocation;
+            }
+            else if (![player isInArea:touchLocation] && [player hasActiveBall]) {
+                CGPoint velocity = [recognizer velocityInView:recognizer.view];
+                [self performBallActionsForPlayer:player withVelocity:velocity];
+            }
+        }
+        
+        else if (recognizer.state == UIGestureRecognizerStateEnded && [player hasActiveBall]) {
+
+            
+            //TODO: Outside border-issue?
+            CGPoint velocity = [recognizer velocityInView:recognizer.view];
+            [self performBallActionsForPlayer:player withVelocity:velocity];
+
+        }
+        }
     }
 }
- */
+
+-(void)performBallActionsForPlayer:(Player *)player withVelocity:(CGPoint)velocity {
+    [self applyForce:velocity affectedNode:player.activeBall];
+    [player deactivateBall];
+    /*
+    if ([player hasBalls]) {
+        [player activateBall:[self createBall]];
+        [self addChild:player.activeBall];
+    }
+     */
+}
+
+/*
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    for (UITouch *touch in touches) {
+        CGPoint touchLocation = [touch locationInView:self.view];
+        touchLocation = [self convertPointFromView:touchLocation];
+        
+        SKShapeNode *node = (SKShapeNode *)[self nodeAtPoint:touchLocation];
+        
+        if ([node.name isEqualToString: @"ball"]) {
+            [self.touchedBalls addObject:node];
+            NSLog(@"WE GOT A HIT!");
+        }
+    }
+}
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
     for (UITouch *touch in touches) {
-        
         
         CGPoint touchLocation = [touch locationInNode:self];
         touchLocation = [self convertPointFromView:touchLocation];
         
         if (CGPathContainsPoint(self.map.restrictedArea, nil, touchLocation, false)) {
             NSLog(@"IN!");
-            return;
         }
-        /*
-         if ([self.ballBorder ])
-         
-         SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-         
-         sprite.position = location;
-         
-         SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-         
-         [sprite runAction:[SKAction repeatActionForever:action]];
-         
-         [self addChild:sprite];
-         */
     }
 }
 
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
     for (UITouch *touch in touches) {
-        //Grab the stones here, let touchesMoved handle all other controlls (border, release etc)
+        CGPoint touchLocation = [touch locationInView:self.view];
+        touchLocation = [self convertPointFromView:touchLocation];
+        
+        SKShapeNode *node = (SKShapeNode *)[self nodeAtPoint:touchLocation];
+        
+        if ([node.name isEqualToString: @"ball"]) {
+            CGPoint velocity = [recognizer velocityInView:recognizer.view];
+            [self applyForce:velocity affectedNode:node];
+            NSLog(@"WE LOST ONE!");
+        }
     }
 }
+ --- Touch Events End --- */
 
+- (void)applyForce:(CGPoint)velocity affectedNode:(SKNode *)node {
+    [node.physicsBody applyForce:CGVectorMake(velocity.x/self.delta * node.physicsBody.mass, -velocity.y/self.delta * node.physicsBody.mass)];
+}
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+    
+    self.delta = currentTime - self.lastTime;
+    self.lastTime = currentTime;
+    
 }
 
 @end

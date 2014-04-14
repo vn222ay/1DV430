@@ -43,12 +43,12 @@
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.viewSize.width/2, self.viewSize.height/2, self.viewSize.width, self.viewSize.height)].CGPath;
         playerArea.fillColor = [UIColor orangeColor];
         [self.playCorner addObject:playerArea];
-        
+        /*
         for (SKShapeNode *shape in self.playCorner) {
             NSLog(@"s");
             [self addChild:shape];
         }
-        
+        */
 
         //Outer Circle
         SKShapeNode *outerCircle = [SKShapeNode node];
@@ -58,7 +58,7 @@
         outerCircle.fillColor = [UIColor whiteColor];
         self.restrictedArea = outerCircle.path;
         [self addChild:outerCircle];
-        
+        /*
         //Middle Circle
         SKShapeNode *middleCircle = [SKShapeNode node];
         middleCircle = [SKShapeNode node];
@@ -72,9 +72,7 @@
         innerCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:50]].CGPath;
         innerCircle.fillColor = [UIColor blackColor];
         [self addChild:innerCircle];
-        
-        
-        
+        */
   
     }
 

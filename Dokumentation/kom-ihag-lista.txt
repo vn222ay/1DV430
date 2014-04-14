@@ -1,0 +1,5 @@
+Byta ut MAP-Noderna till grafisk bild och spara prestanda?
+
+Kunna hantera olika typer av "kartor" (Interface?)
+
+Vem hanterar spelarnas bollar och poäng?

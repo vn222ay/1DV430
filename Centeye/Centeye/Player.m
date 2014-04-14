@@ -17,13 +17,60 @@
 @end
 
 @implementation Player
-
+/*
 -(Player *)initWithColor:(UIColor *)color balls:(int)balls {
     if (self = [super init]) {
         self.color = color;
         self.balls = balls;
     }
     return self;
+}
+ */
+
+-(id)init {
+    if (self = [super init]) {
+        self.balls = 5;
+    }
+    return self;
+}
+
+-(BOOL)hasBalls {
+    if (self.balls > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+-(void)consumeBall {
+    self.balls--;
+}
+
+-(void)activateBall:(SKShapeNode *)newBall {
+    if (![self hasBalls]) {
+        //TODO: Kasta undantag
+        NSLog(@"ERROR! -bollar");
+    }
+    self.balls--;
+    self.activeBall = newBall;
+}
+
+-(void)deactivateBall {
+    self.activeBall = nil;
+}
+
+-(BOOL)hasActiveBall {
+    if (self.activeBall) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+-(BOOL)isInArea:(CGPoint)point {
+    return CGRectContainsPoint(self.playerArea, point);
 }
 
 @end
