@@ -27,7 +27,6 @@
 		7750C86818F8532D008F53DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7750C86618F8532D008F53DA /* InfoPlist.strings */; };
 		7750C86A18F8532D008F53DA /* CenteyeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750C86918F8532D008F53DA /* CenteyeTests.m */; };
 		77A54CB618F878FF00D8F691 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A54CB518F878FF00D8F691 /* Player.m */; };
-		77A54CB918F883B200D8F691 /* PlayCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A54CB818F883B200D8F691 /* PlayCorner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		772A735918FDCBE7000A75C7 /* MapProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapProtocol.h; path = ../MapProtocol.h; sourceTree = "<group>"; };
 		7750B9FA18F914160048F42C /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		7750B9FB18F914160048F42C /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		7750C83118F8532D008F53DA /* Centeye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centeye.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,8 +69,6 @@
 		7750C86918F8532D008F53DA /* CenteyeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenteyeTests.m; sourceTree = "<group>"; };
 		77A54CB418F878FF00D8F691 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		77A54CB518F878FF00D8F691 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		77A54CB718F883B200D8F691 /* PlayCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayCorner.h; sourceTree = "<group>"; };
-		77A54CB818F883B200D8F691 /* PlayCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayCorner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,10 +143,9 @@
 				7750C83D18F8532D008F53DA /* Supporting Files */,
 				77A54CB418F878FF00D8F691 /* Player.h */,
 				77A54CB518F878FF00D8F691 /* Player.m */,
-				77A54CB718F883B200D8F691 /* PlayCorner.h */,
-				77A54CB818F883B200D8F691 /* PlayCorner.m */,
 				7750B9FA18F914160048F42C /* Map.h */,
 				7750B9FB18F914160048F42C /* Map.m */,
+				772A735918FDCBE7000A75C7 /* MapProtocol.h */,
 			);
 			path = Centeye;
 			sourceTree = "<group>";
@@ -287,7 +284,6 @@
 				7750C85318F8532D008F53DA /* MyScene.m in Sources */,
 				7750B9FC18F914160048F42C /* Map.m in Sources */,
 				7750C85018F8532D008F53DA /* ViewController.m in Sources */,
-				77A54CB918F883B200D8F691 /* PlayCorner.m in Sources */,
 				7750C84718F8532D008F53DA /* AppDelegate.m in Sources */,
 				7750C84318F8532D008F53DA /* main.m in Sources */,
 				77A54CB618F878FF00D8F691 /* Player.m in Sources */,
@@ -430,9 +426,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
 				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -447,9 +445,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
 				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

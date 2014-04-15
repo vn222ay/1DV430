@@ -14,18 +14,22 @@
 @property int balls;
 
 
+
 @end
 
 @implementation Player
-/*
+
 -(Player *)initWithColor:(UIColor *)color balls:(int)balls {
     if (self = [super init]) {
         self.color = color;
         self.balls = balls;
+        self.holdingBall = NO;
+        self.points = 0;
+        self.usedBalls = [[NSMutableArray alloc] init];
     }
     return self;
 }
- */
+
 
 -(id)init {
     if (self = [super init]) {
@@ -33,6 +37,11 @@
     }
     return self;
 }
+/*
+-(CFTimeInterval)getDelta {
+    return CFAbsoluteTimeGetCurrent() - self.lastTime;
+}
+ */
 
 -(BOOL)hasBalls {
     if (self.balls > 0) {
@@ -42,9 +51,16 @@
         return false;
     }
 }
-
+/*
 -(void)consumeBall {
     self.balls--;
+}
+ */
+
+-(void)updateDelta {
+    CFTimeInterval currentTime = CFAbsoluteTimeGetCurrent();
+    self.delta = currentTime - self.lastTime;
+    self.lastTime = currentTime;
 }
 
 -(void)activateBall:(SKShapeNode *)newBall {
@@ -53,10 +69,12 @@
         NSLog(@"ERROR! -bollar");
     }
     self.balls--;
+    newBall.fillColor = self.color;
     self.activeBall = newBall;
 }
 
 -(void)deactivateBall {
+    [self.usedBalls addObject:self.activeBall];
     self.activeBall = nil;
 }
 
@@ -68,8 +86,6 @@
         return false;
     }
 }
-
-
 
 -(BOOL)isInArea:(CGPoint)point {
     return CGRectContainsPoint(self.playerArea, point);

@@ -12,14 +12,21 @@
 @property (strong, nonatomic) SKShapeNode *activeBall;
 @property CGRect playerArea;
 @property CGPoint ballStartPoint;
+@property CGPoint oldPosition;
+@property CFTimeInterval delta;
+@property CFTimeInterval lastTime;
+@property BOOL holdingBall;
+@property (strong, nonatomic) NSMutableArray *usedBalls;
+@property int points;
 
-//-(Player *)initWithColor:(UIColor *)color balls:(int)balls;
+-(Player *)initWithColor:(UIColor *)color balls:(int)balls;
 -(BOOL)hasActiveBall;
 -(BOOL)hasBalls;
 -(BOOL)isInArea:(CGPoint)point;
 -(void)deactivateBall;
 -(void)activateBall:(SKShapeNode *)newBall;
--(void)consumeBall;
-
+-(void)updateDelta;
+-(void)setPoints:(int)newPoints;
+//-(CFTimeInterval)getDelta;
 
 @end

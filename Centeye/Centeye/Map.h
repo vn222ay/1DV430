@@ -7,9 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "MapProtocol.h"
 
-@interface Map : SKNode
+@interface Map : SKNode<MapProtocol>
+
 @property CGPathRef restrictedArea;
+
 -(SKNode *)initWithSize:(CGSize)rectSize;
 -(BOOL)shouldRelease:(CGPoint)position;
+-(int)getBallSizeForMap;
 @end
