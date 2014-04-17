@@ -88,7 +88,7 @@
 }
 
 -(BOOL)isInArea:(CGPoint)point {
-    return CGRectContainsPoint(self.playerArea, point);
+    return CGRectContainsPoint(self.playerPositions.playerArea, point);
 }
 
 @end

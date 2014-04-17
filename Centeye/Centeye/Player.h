@@ -7,9 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "PlayerPositions.h"
 
 @interface Player : NSObject
 @property (strong, nonatomic) SKShapeNode *activeBall;
+@property (strong, nonatomic) SKLabelNode *scoreLabel;
 @property CGRect playerArea;
 @property CGPoint ballStartPoint;
 @property CGPoint oldPosition;
@@ -18,6 +20,7 @@
 @property BOOL holdingBall;
 @property (strong, nonatomic) NSMutableArray *usedBalls;
 @property int points;
+@property (strong, nonatomic) PlayerPositions *playerPositions;
 
 -(Player *)initWithColor:(UIColor *)color balls:(int)balls;
 -(BOOL)hasActiveBall;
@@ -27,6 +30,5 @@
 -(void)activateBall:(SKShapeNode *)newBall;
 -(void)updateDelta;
 -(void)setPoints:(int)newPoints;
-//-(CFTimeInterval)getDelta;
 
 @end

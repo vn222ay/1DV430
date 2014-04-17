@@ -16,4 +16,9 @@
 -(SKNode *)initWithSize:(CGSize)rectSize;
 -(BOOL)shouldRelease:(CGPoint)position;
 -(int)getBallSizeForMap;
+-(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint;
+-(CGRect)areaForPlayerNr:(int)i;
+-(CGPoint)startPointForPlayerNr:(int)i;
+-(UIColor *)colorForPlayerNr:(int)i;
+
 @end

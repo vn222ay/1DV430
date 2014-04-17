@@ -15,9 +15,9 @@
 
 @property (strong, nonatomic) NSMutableArray *players;
 @property (strong, nonatomic) Map<MapProtocol> *map;
-//@property CFTimeInterval lastTime;
-//@property CFTimeInterval delta;
 @property (strong, nonatomic) NSDate *lastTouchTime;
+@property CFTimeInterval toNextCheck;
+@property (strong, nonatomic) NSDictionary *pointAreas;
 
 @end
 
@@ -36,8 +36,6 @@
 
 - (void)didMoveToView:(SKView *)view {
     self.lastTouchTime = [NSDate date];
-    //UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
-    //[[self view] addGestureRecognizer:gestureRecognizer];
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     self.physicsWorld.gravity = CGVectorMake(0, 0);
     self.physicsBody.friction = 0.2;
@@ -48,95 +46,48 @@
     self.players = [[NSMutableArray alloc] init];
     self.map = [[Map alloc] initWithSize:self.view.bounds.size];
     [self addChild:self.map];
+    self.pointAreas = [self.map getPointAreas];
     
-    Player *player1 = [[Player alloc] initWithColor:[UIColor greenColor] balls:5];
-    player1.playerArea = CGRectMake(0, 0, self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    player1.ballStartPoint = CGPointMake(55, 55);
-    [self.players addObject:player1];
-    [self giveBallToPlayer:player1];
-    
-    Player *player2 = [[Player alloc] initWithColor:[UIColor blueColor] balls:5];
-    player2.playerArea = CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width/2, self.view.bounds.size.height);
-    player2.ballStartPoint = CGPointMake(55, self.view.bounds.size.height-55);
-    [self.players addObject:player2];
-    [self giveBallToPlayer:player2];
-    
-    Player *player3 = [[Player alloc] initWithColor:[UIColor yellowColor] balls:5];
-    player3.playerArea = CGRectMake(self.view.bounds.size.width/2, 0, self.view.bounds.size.width, self.view.bounds.size.height/2);
-    player3.ballStartPoint = CGPointMake(self.view.bounds.size.width-55, 55);
-    [self.players addObject:player3];
-    [self giveBallToPlayer:player3];
-    
-    
-    Player *player4 = [[Player alloc] initWithColor:[UIColor orangeColor] balls:5];
-    player4.playerArea = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height);
-    player4.ballStartPoint = CGPointMake(self.view.bounds.size.width-55, self.view.bounds.size.height-55);
-    [self.players addObject:player4];
-    [self giveBallToPlayer:player4];
+    for (int i = 0; i < 4; i++) {
+        Player *player = [[Player alloc] initWithColor:[self.map colorForPlayerNr:i] balls:5];
+        player.playerPositions = [[PlayerPositions alloc] initWithPlayerNr:i onViewSize:self.view.bounds.size];
+//        player.playerArea = [self.map areaForPlayerNr:i];
+   //     player.ballStartPoint = [self.map startPointForPlayerNr:i];
+        [self.players addObject:player];
+        [self giveBallToPlayer:player];
+    }
+    [self initPlayerScores];
+
+}
+
+-(void)initPlayerScores {
+    for (Player *player in self.players) {
+        SKLabelNode *scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
+        scoreLabel.name = @"scoreLabel";
+        scoreLabel.text = [NSString stringWithFormat:@"%d", player.points];
+        scoreLabel.position = player.playerPositions.scoreLabelPoint;
+        scoreLabel.fontColor = [SKColor colorWithRed:0.3 green:0.3 blue:0.7 alpha:0.8];
+        scoreLabel.fontSize = 40;
+        scoreLabel.zPosition = 5;
+        //self.infoLabel.hidden = NO;
+        scoreLabel.zRotation = player.playerPositions.scoreLabelAngle;
+        player.scoreLabel = scoreLabel;
+        [self addChild:scoreLabel];
+    }
 }
 
 -(void)giveBallToPlayer:(Player *)player {
     if ([player hasBalls]) {
-        //[player consumeBall];
-        SKShapeNode *ball = [self createBallWithPosition:player.ballStartPoint];
+
+        SKShapeNode *ball = [self.map createBallWithPosition:player.playerPositions.ballStartPoint];
         [player activateBall:ball];
         [self addChild:player.activeBall];
     }
     else {
-        //NSLog(@"Inga bollar kvar");
+        //Inga bollar kvar
     }
 }
 
-
--(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint {
-    SKShapeNode *newBall = [[SKShapeNode alloc] init];
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddArc(path, NULL, 0, 0, [self.map getBallSizeForMap], 0.0, (2 * M_PI), NO);
-    newBall.path = path;
-    newBall.fillColor = [UIColor grayColor];
-    newBall.name = @"ball";
-    newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:30];
-    newBall.physicsBody.dynamic = YES;
-    newBall.physicsBody.affectedByGravity = NO;
-    newBall.position = startPoint;
-    
-    newBall.physicsBody.linearDamping = 0.6;
-    newBall.physicsBody.restitution = 0.6;
-    newBall.physicsBody.friction = 0.2;
-    
-    return newBall;
-}
-
-/* --- Touch Events Begin --- */
-/*
-- (void)handlePanFrom:(UIPanGestureRecognizer *)recognizer {
-    
-    CGPoint touchLocation = [recognizer locationInView:recognizer.view];
-    touchLocation = [self convertPointFromView:touchLocation];
-    
-    for (Player *player in self.players) {
-        if ([player isInArea:touchLocation]) {
-            if (recognizer.state == UIGestureRecognizerStateChanged) {
-                player.activeBall.position = touchLocation;
-                if ([self.map shouldRelease:touchLocation]) {
-                    //Fortfarande inom spelarens område men kommt in på förbjuden mark => släpp!
-                    //CGPoint velocity = [recognizer velocityInView:recognizer.view];
-                    CGPoint velocity = [self calculateVelocity:self.delta oldPoint:player.previousPosition newPoint:player.activeBall.position];
-                    [self performBallActionsForPlayer:player withVelocity:velocity];
-                }
-            }
-            //Touch upphört och rörd boll ska släppas (ej inne på förbjuden mark)
-            else if (recognizer.state == UIGestureRecognizerStateEnded && [player hasActiveBall]) {
-                //TODO: Outside border-issue?
-                CGPoint velocity = [recognizer velocityInView:recognizer.view];
-                [self performBallActionsForPlayer:player withVelocity:velocity];
-            }
-        }
- NSLog(@"%f - %f", player.previousPosition.x, player.activeBall.position.x);
-        player.previousPosition = player.activeBall.position;
-    }
-}
-*/
 
 -(void)checkScore {
     for (Player *player in self.players) {
@@ -152,14 +103,35 @@
     [self applyForce:velocity affectedNode:player.activeBall withDelta:delta];
     [player deactivateBall];
     player.holdingBall = NO;
-    //NSLog(@"ENDED!");
     if ([self giveBallDirectly]) {
         [self giveBallToPlayer:player];
     }
-    
-    //[self giveBallToPlayer:player];
 }
 
+
+-(void)calculatePoints {
+    for (Player *player in self.players) {
+        int tempPoints = 0;
+        for (UIBezierPath *path in self.pointAreas) {
+            for (SKNode *ball in player.usedBalls) {
+                if ([path containsPoint:ball.position]) {
+                    tempPoints += [self.pointAreas[path] intValue];
+                }
+            }
+        }
+        int oldScore = player.points;
+        player.points = tempPoints;
+        player.scoreLabel.text = [NSString stringWithFormat:@"%d", tempPoints];
+        if (oldScore != tempPoints) {
+            SKAction *sizeUp = [SKAction scaleTo:1.5 duration:0.3];
+            SKAction *sizeDown = [SKAction scaleTo:1 duration:0.3];
+            
+            SKAction *statusUpdate = [SKAction sequence:@[sizeUp, sizeDown]];
+            [player.scoreLabel runAction:statusUpdate withKey:@"newScore"];
+        }
+
+    }
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *touch in touches) {
@@ -173,31 +145,11 @@
                 
                 player.activeBall.position = touchLocation;
                 player.holdingBall = YES;
-                //NSLog(@"BEGAN!");
-                
             }
         }
     }
-    [self calculatePoints];
-    [self checkScore];
 }
 
--(void)calculatePoints {
-    NSDictionary *pointAreas = [self.map getPointAreas];
-    for (Player *player in self.players) {
-        int tempPoints = 0;
-        for (UIBezierPath *path in pointAreas) {
-            for (SKNode *ball in player.usedBalls) {
-                //if (CGPathContainsPoint(pointAreas[path], nil, ball.position, NO)) {
-                if ([path containsPoint:ball.position]) {
-                    //NSLog(@"%@ - %@", path, pointAreas[path]);
-                    tempPoints += [pointAreas[path] intValue];
-                }
-            }
-        }
-        player.points = tempPoints;
-    }
-}
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
@@ -213,14 +165,12 @@
             if ([player isInArea:touchLocation] && [player hasActiveBall] && player.holdingBall) {
                 [player updateDelta]; //TODO: Kanske inte todo, men simulatorn uppdaterar väldigt oregelbundet => problem i simulatorn. Funkar perfekt på paddan
                 
-                //NSLog(@"%f", player.delta);
                 player.activeBall.position = touchLocation;
                 if ([self.map shouldRelease:touchLocation] && player.delta > 0.01f) { // && player.delta > 0.01f TODO: Ta bort denna fulfix för att få det att flyta bättre i simulator (måste fps == 60)
 
                     CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldPosition newPoint:touchLocation];
  
                     [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.delta];
-                    //NSLog(@"Delta: %f Old X:%f New X:%f", player.delta, player.oldPosition.x, touchLocation.x);
                 }
                 player.oldPosition = touchLocation;
 
@@ -244,46 +194,46 @@
                     player.delta = 0.0165f;
                     NSLog(@"---- FIXING!");
                 }
+                player.activeBall.position = touchLocation;
                 //[player updateDelta]; //TODO: Kanske inte todo, men simulatorn uppdaterar väldigt oregelbundet => problem i simulatorn. Funkar perfekt på paddan
                 CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldPosition newPoint:touchLocation];
                     
                 [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.delta];
-                //NSLog(@"Delta: %f Old X:%f New X:%f", player.delta, player.oldPosition.x, touchLocation.x);
             }
         }
     }
 }
-
-/*
--(void)updateDelta {
-    CFTimeInterval currentTime = CFAbsoluteTimeGetCurrent();
-    self.delta = currentTime - self.lastTime;
-    self.lastTime = currentTime;
-}
- */
-
 
 -(CGPoint)calculateVelocity:(CFTimeInterval)delta oldPoint:(CGPoint)oldPoint newPoint:(CGPoint)newPoint {
     newPoint = [self convertPointFromView:newPoint];
     oldPoint = [self convertPointFromView:oldPoint];
     double dx = (newPoint.x-oldPoint.x)/delta;
     double dy = (newPoint.y-oldPoint.y)/delta;
-    //NSLog(@"x %f y %f", dx, dy);
     return CGPointMake(dx, dy);
 }
- /*--- Touch Events End --- */
+
 
 - (void)applyForce:(CGPoint)velocity affectedNode:(SKNode *)node withDelta:(CFTimeInterval)delta {
     [node.physicsBody applyForce:CGVectorMake(velocity.x/delta * node.physicsBody.mass, -velocity.y/delta * node.physicsBody.mass)];
 }
 
+-(BOOL)allBallsStill {
+    return false; //TODO: Implementera!
+}
+
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    /*
-    currentTime = CFAbsoluteTimeGetCurrent();
-    self.delta = currentTime - self.lastTime;
-    self.lastTime = currentTime;
-     */
+    if (self.toNextCheck < currentTime) {
+        /*
+        if (![self giveBallDirectly]) {
+            if ([self allBallsStill]) {
+                //TODO: Give next player a ball
+            }
+        }
+         */
+        [self calculatePoints];
+        self.toNextCheck = currentTime + 0.3;
+    }
 }
 
 @end

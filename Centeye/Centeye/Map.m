@@ -18,6 +18,10 @@
 @property (strong, nonatomic) NSMutableArray *playCorner;
 @property (strong, nonatomic) NSMutableDictionary *pointAreas;
 
+@property (strong, nonatomic) NSArray *areaForPlayer;
+@property (strong, nonatomic) NSArray *startPointForPlayer;
+@property (strong, nonatomic) NSArray *colorForPlayer;
+
 @end
 
 @implementation Map
@@ -27,6 +31,7 @@
     if (self = [super init]) {
         self.viewSize = rectSize;
         self.pointAreas = [[NSMutableDictionary alloc] init];
+        self.playCorner = [[NSMutableArray alloc] init];
         
         int middleCircleRadius = self.viewSize.height/4;
         int innerCircleRadius = self.viewSize.height/10;
@@ -34,8 +39,11 @@
         [self.pointAreas setObject:[NSNumber numberWithInt:kMiddlePoints] forKey:[UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:middleCircleRadius+kBallRadius]]];
         [self.pointAreas setObject:[NSNumber numberWithInt:kInnerPoints] forKey:[UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:innerCircleRadius+kBallRadius]]];
         
+
+        self.colorForPlayer = @[[UIColor greenColor], [UIColor yellowColor], [UIColor blueColor], [UIColor orangeColor]];
+        
         NSLog(@"Init Player Area");
-        self.playCorner = [[NSMutableArray alloc] init];
+
         
         SKShapeNode *playerArea = [SKShapeNode node];
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.viewSize.width/2, self.viewSize.height/2)].CGPath;
@@ -56,10 +64,11 @@
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.viewSize.width/2, self.viewSize.height/2, self.viewSize.width, self.viewSize.height)].CGPath;
         playerArea.fillColor = [UIColor orangeColor];
         [self.playCorner addObject:playerArea];
-        
+        /*
         for (SKShapeNode *shape in self.playCorner) {
             [self addChild:shape];
         }
+         */
         
 
         //Outer Circle
@@ -78,8 +87,6 @@
         middleCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:middleCircleRadius]].CGPath;
         middleCircle.fillColor = [UIColor grayColor];
         
-        //[self.pointAreas setObject:(id)middleCircle.path forKey:[NSNumber numberWithInt:2]];
-        
         [self addChild:middleCircle];
         
         //Inner Circle
@@ -87,28 +94,31 @@
         innerCircle = [SKShapeNode node];
         innerCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:innerCircleRadius]].CGPath;
         innerCircle.fillColor = [UIColor blackColor];
-        
-        //[self.pointAreas setObject:(id)innerCircle.path forKey:[NSNumber numberWithInt:5]];
-        
-        [self addChild:innerCircle];
-   
-        
-        
-        //Test
-        
-        //CGPathRef tapTargetPath = CGPathCreateCopyByStrokingPath(middleCircle.path, NULL, 30, kCGLineCapRound, kCGLineJoinRound, 30);
-        //SKShapeNode *test = [SKShapeNode node];
-        //test = [SKShapeNode node];
-        //test.path = tapTargetPath;
-        //test.fillColor = [UIColor greenColor];
-        
-        //[self.pointAreas setObject:[NSNumber numberWithInt:5] forKey:[UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:200]]];
-        
-        //[self addChild:test];
-        //[self addChild:innerCircle];
-    }
 
+        [self addChild:innerCircle];
+ 
+
+    }
     return self;
+}
+
+-(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint {
+    SKShapeNode *newBall = [[SKShapeNode alloc] init];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path, NULL, 0, 0, kBallRadius, 0.0, (2 * M_PI), NO);
+    newBall.path = path;
+    newBall.fillColor = [UIColor grayColor];
+    newBall.name = @"ball";
+    newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:30];
+    newBall.physicsBody.dynamic = YES;
+    newBall.physicsBody.affectedByGravity = NO;
+    newBall.position = startPoint;
+    
+    newBall.physicsBody.linearDamping = 0.6;
+    newBall.physicsBody.restitution = 0.6;
+    newBall.physicsBody.friction = 0.2;
+    
+    return newBall;
 }
 
 -(int)getBallSizeForMap {
@@ -127,5 +137,14 @@
     return CGRectMake(self.viewSize.width/2-radius, self.viewSize.height/2-radius, radius*2, radius*2);
 }
 
+-(CGRect)areaForPlayerNr:(int)i {
+    return [[self.areaForPlayer objectAtIndex:i] CGRectValue];
+}
+-(CGPoint)startPointForPlayerNr:(int)i {
+    return [[self.startPointForPlayer objectAtIndex:i] CGPointValue];
+}
+-(UIColor *)colorForPlayerNr:(int)i {
+    return [self.colorForPlayer objectAtIndex:i];
+}
 
 @end

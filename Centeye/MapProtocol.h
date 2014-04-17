@@ -14,4 +14,8 @@
 -(NSDictionary *)getPointAreas;
 -(int)getBallSizeForMap;
 -(BOOL)shouldRelease:(CGPoint)position;
+-(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint;
+-(CGRect)areaForPlayerNr:(int)i;
+-(CGPoint)startPointForPlayerNr:(int)i;
+-(UIColor *)colorForPlayerNr:(int)i;
 @end

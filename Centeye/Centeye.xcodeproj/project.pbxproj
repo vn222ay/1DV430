@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7730AEB218FF41E00077BDA0 /* PlayerPositions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7730AEB118FF41E00077BDA0 /* PlayerPositions.m */; };
 		7750B9FC18F914160048F42C /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 7750B9FB18F914160048F42C /* Map.m */; };
 		7750C83518F8532D008F53DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83418F8532D008F53DA /* Foundation.framework */; };
 		7750C83718F8532D008F53DA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7750C83618F8532D008F53DA /* CoreGraphics.framework */; };
@@ -41,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		772A735918FDCBE7000A75C7 /* MapProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapProtocol.h; path = ../MapProtocol.h; sourceTree = "<group>"; };
+		7730AEB018FF41E00077BDA0 /* PlayerPositions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPositions.h; sourceTree = "<group>"; };
+		7730AEB118FF41E00077BDA0 /* PlayerPositions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPositions.m; sourceTree = "<group>"; };
 		7750B9FA18F914160048F42C /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		7750B9FB18F914160048F42C /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		7750C83118F8532D008F53DA /* Centeye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centeye.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +149,8 @@
 				7750B9FA18F914160048F42C /* Map.h */,
 				7750B9FB18F914160048F42C /* Map.m */,
 				772A735918FDCBE7000A75C7 /* MapProtocol.h */,
+				7730AEB018FF41E00077BDA0 /* PlayerPositions.h */,
+				7730AEB118FF41E00077BDA0 /* PlayerPositions.m */,
 			);
 			path = Centeye;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				7750C84718F8532D008F53DA /* AppDelegate.m in Sources */,
 				7750C84318F8532D008F53DA /* main.m in Sources */,
 				77A54CB618F878FF00D8F691 /* Player.m in Sources */,
+				7730AEB218FF41E00077BDA0 /* PlayerPositions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +432,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
 				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
@@ -445,7 +451,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Centeye/Centeye-Prefix.pch";
 				INFOPLIST_FILE = "Centeye/Centeye-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
