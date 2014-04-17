@@ -58,6 +58,7 @@
  */
 
 -(void)updateDelta {
+    self.oldDelta = self.delta;
     CFTimeInterval currentTime = CFAbsoluteTimeGetCurrent();
     self.delta = currentTime - self.lastTime;
     self.lastTime = currentTime;
@@ -85,6 +86,11 @@
     else {
         return false;
     }
+}
+
+-(void)rotatePositions:(CGPoint)newPosition {
+    self.oldOldPosition = self.oldPosition;
+    self.oldPosition = newPosition;
 }
 
 -(BOOL)isInArea:(CGPoint)point {

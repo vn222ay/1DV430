@@ -163,17 +163,23 @@
         for (Player *player in self.players) {
             
             if ([player isInArea:touchLocation] && [player hasActiveBall] && player.holdingBall) {
-                [player updateDelta]; //TODO: Kanske inte todo, men simulatorn uppdaterar väldigt oregelbundet => problem i simulatorn. Funkar perfekt på paddan
+                [player updateDelta];
                 
                 player.activeBall.position = touchLocation;
-                if ([self.map shouldRelease:touchLocation] && player.delta > 0.01f) { // && player.delta > 0.01f TODO: Ta bort denna fulfix för att få det att flyta bättre i simulator (måste fps == 60)
+                if ([self.map shouldRelease:touchLocation]) { //Fix för temporära FPS-drop (dock ej under 30 FPS)
+                
+                    if (player.delta < 0.012f || player.delta > 0.03f) { //FPS-problem, ska funka på temp. 30 FPS
+                        CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldOldPosition newPoint:touchLocation];
+                        [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.oldDelta+player.delta];
+                        NSLog(@"[TouchesMoved] low FPS detected");
+                    }
+                    else {
 
-                    CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldPosition newPoint:touchLocation];
- 
-                    [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.delta];
+                        CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldPosition newPoint:touchLocation];
+                        [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.delta];
+                    }
                 }
-                player.oldPosition = touchLocation;
-
+                [player rotatePositions:touchLocation];
             }
         }
     }
@@ -189,14 +195,17 @@
 
         for (Player *player in self.players) {
             if ([player isInArea:touchLocation] && [player hasActiveBall] && player.holdingBall) {
-                
-                if (player.delta < 0.01f || player.delta > 0.03f) { //Fulfix för att inte FPSen ska försöka hastigheten på kastet. Under 0.01f är inte rimligt
-                    player.delta = 0.0165f;
-                    NSLog(@"---- FIXING!");
+                [player updateDelta];
+                CFTimeInterval delta = player.delta;
+                CGPoint oldPosition = player.oldPosition;
+                if (player.delta < 0.012f || player.delta > 0.03f) { //Fix för temporära FPS-drop (dock ej under 30 FPS)
+                    delta = player.delta + player.oldDelta;
+                    oldPosition = player.oldOldPosition;
+                    NSLog(@"[TouchesEnded] low FPS detected");
                 }
                 player.activeBall.position = touchLocation;
                 //[player updateDelta]; //TODO: Kanske inte todo, men simulatorn uppdaterar väldigt oregelbundet => problem i simulatorn. Funkar perfekt på paddan
-                CGPoint velocity = [self calculateVelocity:player.delta oldPoint:player.oldPosition newPoint:touchLocation];
+                CGPoint velocity = [self calculateVelocity:delta oldPoint:oldPosition newPoint:touchLocation];
                     
                 [self performBallActionsForPlayer:player withVelocity:velocity andDelta:player.delta];
             }

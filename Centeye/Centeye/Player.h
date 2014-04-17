@@ -15,7 +15,9 @@
 @property CGRect playerArea;
 @property CGPoint ballStartPoint;
 @property CGPoint oldPosition;
+@property CGPoint oldOldPosition;
 @property CFTimeInterval delta;
+@property CFTimeInterval oldDelta;
 @property CFTimeInterval lastTime;
 @property BOOL holdingBall;
 @property (strong, nonatomic) NSMutableArray *usedBalls;
@@ -30,5 +32,6 @@
 -(void)activateBall:(SKShapeNode *)newBall;
 -(void)updateDelta;
 -(void)setPoints:(int)newPoints;
+-(void)rotatePositions:(CGPoint)oldPosition;
 
 @end
