@@ -12,10 +12,12 @@
 @interface Player : NSObject
 @property (strong, nonatomic) SKShapeNode *activeBall;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
-@property CGRect playerArea;
-@property CGPoint ballStartPoint;
+
+//@property CGRect playerArea;
+//@property CGPoint ballStartPoint;
 @property CGPoint oldPosition;
 @property CGPoint oldOldPosition;
+
 @property CFTimeInterval delta;
 @property CFTimeInterval oldDelta;
 @property CFTimeInterval lastTime;

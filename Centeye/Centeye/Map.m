@@ -97,6 +97,7 @@
 
         [self addChild:innerCircle];
  
+ 
 
     }
     return self;
@@ -110,12 +111,12 @@
     newBall.fillColor = [UIColor grayColor];
     newBall.name = @"ball";
     newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:30];
-    newBall.physicsBody.dynamic = YES;
+    newBall.physicsBody.dynamic = NO;
     newBall.physicsBody.affectedByGravity = NO;
     newBall.position = startPoint;
     
     newBall.physicsBody.linearDamping = 0.6;
-    newBall.physicsBody.restitution = 0.6;
+    newBall.physicsBody.restitution = 0.9;
     newBall.physicsBody.friction = 0.2;
     
     return newBall;

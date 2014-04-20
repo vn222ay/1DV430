@@ -7,7 +7,7 @@
 //
 
 #import "PlayerPositions.h"
-#define kBallPositionPadding 60
+#define kBallPositionPadding 80
 #define kScorePositionPadding 200
 
 @implementation PlayerPositions
@@ -27,16 +27,16 @@
                 self.scoreLabelAngle = 225 / 180.0 * M_PI;
                 break;
             case 2:
-                self.ballStartPoint = CGPointMake(viewSize.width-kBallPositionPadding, kBallPositionPadding);
-                self.playerArea = CGRectMake(viewSize.width/2, 0, viewSize.width, viewSize.height/2);
-                self.scoreLabelPoint = CGPointMake(viewSize.width-kScorePositionPadding, kScorePositionPadding);
-                self.scoreLabelAngle = 45 / 180.0 * M_PI;
-                break;
-            case 3:
                 self.ballStartPoint = CGPointMake(viewSize.width-kBallPositionPadding, viewSize.height-kBallPositionPadding);
                 self.playerArea = CGRectMake(viewSize.width/2, viewSize.height/2, viewSize.width, viewSize.height);
                 self.scoreLabelPoint = CGPointMake(viewSize.width-kScorePositionPadding, viewSize.height-kScorePositionPadding);
                 self.scoreLabelAngle = 135 / 180.0 * M_PI;
+                break;
+            case 3:
+                self.ballStartPoint = CGPointMake(viewSize.width-kBallPositionPadding, kBallPositionPadding);
+                self.playerArea = CGRectMake(viewSize.width/2, 0, viewSize.width, viewSize.height/2);
+                self.scoreLabelPoint = CGPointMake(viewSize.width-kScorePositionPadding, kScorePositionPadding);
+                self.scoreLabelAngle = 45 / 180.0 * M_PI;
                 break;
             default:
                 break;
