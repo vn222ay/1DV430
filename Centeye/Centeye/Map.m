@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Viktor Nilsson. All rights reserved.
 //
 
-#define kBallRadius 30
+#define kBallRadius 40
 #define kMiddlePoints 1
 #define kInnerPoints 4
 
@@ -40,30 +40,36 @@
         [self.pointAreas setObject:[NSNumber numberWithInt:kInnerPoints] forKey:[UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:innerCircleRadius+kBallRadius]]];
         
 
-        self.colorForPlayer = @[[UIColor greenColor], [UIColor yellowColor], [UIColor blueColor], [UIColor orangeColor]];
+        self.colorForPlayer = @[
+                                [SKColor colorWithRed:35.0f/255.0f green:209.0f/255.0f blue:166.0f/255.0f alpha:1],
+                                [SKColor colorWithRed:209.0f/255.0f green:166.0f/255.0f blue:35.0f/255.0f alpha:1],
+                                [SKColor colorWithRed:209.0f/255.0f green:79.0f/255.0f blue:35.0f/255.0f alpha:1],
+                                [SKColor colorWithRed:35.0f/255.0f green:166.0f/255.0f blue:209.0f/255.0f alpha:1]
+                                ];
         
         NSLog(@"Init Player Area");
-
         
+        /*
         SKShapeNode *playerArea = [SKShapeNode node];
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.viewSize.width/2, self.viewSize.height/2)].CGPath;
-        playerArea.fillColor = [UIColor greenColor];
+        playerArea.strokeColor = [UIColor greenColor];
         [self.playCorner addObject:playerArea];
         
         playerArea = [SKShapeNode node];
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.viewSize.width/2, 0, self.viewSize.width, self.viewSize.height/2)].CGPath;
-        playerArea.fillColor = [UIColor yellowColor];
+        playerArea.strokeColor = [UIColor yellowColor];
         [self.playCorner addObject:playerArea];
         
         playerArea = [SKShapeNode node];
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, self.viewSize.height/2, self.viewSize.width/2, self.viewSize.height)].CGPath;
-        playerArea.fillColor = [UIColor blueColor];
+        playerArea.strokeColor = [UIColor blueColor];
         [self.playCorner addObject:playerArea];
         
         playerArea = [SKShapeNode node];
         playerArea.path = [UIBezierPath bezierPathWithRect: CGRectMake(self.viewSize.width/2, self.viewSize.height/2, self.viewSize.width, self.viewSize.height)].CGPath;
-        playerArea.fillColor = [UIColor orangeColor];
+        playerArea.strokeColor = [UIColor orangeColor];
         [self.playCorner addObject:playerArea];
+         */
         /*
         for (SKShapeNode *shape in self.playCorner) {
             [self addChild:shape];
@@ -74,20 +80,21 @@
         //Outer Circle
         SKShapeNode *outerCircle = [SKShapeNode node];
         outerCircle = [SKShapeNode node];
-        CGPathRef outerCirclePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.viewSize.width, self.viewSize.height)].CGPath;
+        UIBezierPath *beizerPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.viewSize.width, self.viewSize.height)];
+        CGPathRef outerCirclePath = beizerPath.CGPath;
         outerCircle.path = outerCirclePath;
         outerCircle.fillColor = [UIColor whiteColor];
-        self.restrictedArea = outerCircle.path;
+        self.restrictedArea = beizerPath; //.path;
         
-        [self addChild:outerCircle];
+        //[self addChild:outerCircle];
 
         //Middle Circle
         SKShapeNode *middleCircle = [SKShapeNode node];
         middleCircle = [SKShapeNode node];
         middleCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:middleCircleRadius]].CGPath;
         middleCircle.fillColor = [UIColor grayColor];
-        
-        [self addChild:middleCircle];
+ 
+        //[self addChild:middleCircle];
         
         //Inner Circle
         SKShapeNode *innerCircle = [SKShapeNode node];
@@ -95,22 +102,25 @@
         innerCircle.path = [UIBezierPath bezierPathWithOvalInRect:[self circleInMiddle:innerCircleRadius]].CGPath;
         innerCircle.fillColor = [UIColor blackColor];
 
-        [self addChild:innerCircle];
+        //[self addChild:innerCircle];
  
- 
-
     }
     return self;
 }
 
--(SKShapeNode *)createBallWithPosition:(CGPoint)startPoint {
+-(SKNode *)createBallWithPosition:(CGPoint)startPoint {
+    SKSpriteNode *newBall;
+    newBall = [SKSpriteNode spriteNodeWithImageNamed:@"boll3.png"];
+    /*
     SKShapeNode *newBall = [[SKShapeNode alloc] init];
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddArc(path, NULL, 0, 0, kBallRadius, 0.0, (2 * M_PI), NO);
     newBall.path = path;
-    newBall.fillColor = [UIColor grayColor];
-    newBall.name = @"ball";
-    newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:30];
+     
+    newBall.fillColor = [UIColor clearColor];
+    newBall.lineWidth = 0.0;
+     */
+    newBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kBallRadius];
     newBall.physicsBody.dynamic = NO;
     newBall.physicsBody.affectedByGravity = NO;
     newBall.position = startPoint;
@@ -118,6 +128,7 @@
     newBall.physicsBody.linearDamping = 0.6;
     newBall.physicsBody.restitution = 0.9;
     newBall.physicsBody.friction = 0.2;
+    
     
     return newBall;
 }
@@ -131,7 +142,7 @@
 }
 
 -(BOOL)shouldRelease:(CGPoint)position {
-    return CGPathContainsPoint(self.restrictedArea, nil, position, NO);
+    return [self.restrictedArea containsPoint:position];
 }
 
 -(CGRect)circleInMiddle:(int)radius {

@@ -14,6 +14,7 @@
 @property BOOL oneByOne;
 @property BOOL waitUntilStill;
 @property BOOL useWalls;
+@property BOOL useSizeUp;
 @property NSInteger balls;
 
 -(void)resetDefaults;

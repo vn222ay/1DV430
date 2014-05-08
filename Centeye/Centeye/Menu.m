@@ -238,6 +238,7 @@
             [self.gameSettings saveUserDefaults];
             [[self view] removeGestureRecognizer:self.gestureRecognizer];
             
+            
             SKScene *scene = [MyScene sceneWithSize:self.view.bounds.size];
             scene.scaleMode = SKSceneScaleModeAspectFill;
 

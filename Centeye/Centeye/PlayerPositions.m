@@ -7,8 +7,8 @@
 //
 
 #import "PlayerPositions.h"
-#define kBallPositionPadding 80
-#define kScorePositionPadding 200
+#define kBallPositionPadding 50
+#define kScorePositionPadding 150
 
 @implementation PlayerPositions
 -(id)initWithPlayerNr:(int)i onViewSize:(CGSize)viewSize {

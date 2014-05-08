@@ -25,10 +25,11 @@
 -(void)resetDefaults {
     NSLog(@"Resetting defaults");
     self.numberOfPlayers = 4;
-    self.oneByOne = YES;
-    self.waitUntilStill = YES;
-    self.useWalls = YES;
-    self.balls = 3;
+    self.oneByOne = NO;
+    self.waitUntilStill = NO;
+    self.useWalls = NO;
+    self.useSizeUp = NO;
+    self.balls = 1;
     [self saveUserDefaults];
 }
 

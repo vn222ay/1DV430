@@ -10,7 +10,14 @@
 #import "MyScene.h"
 #import "Menu.h"
 
+@interface ViewController ()
+
+@property BOOL loaded;
+
+@end
+
 @implementation ViewController
+
 
 - (void)viewDidLoad
 {
@@ -19,19 +26,25 @@
 
 - (void)viewWillLayoutSubviews
 {
-    [super viewWillLayoutSubviews];
-    // Configure the view.
-    SKView * skView = (SKView *)self.view;
+    if (!self.loaded) {
+        
+        // Undvik att den laddas på nytt när orientation ändras
+        [super viewWillLayoutSubviews];
+
+        SKView * skView = (SKView *)self.view;
     
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+        //TODO Ta bort
+        skView.showsFPS = YES;
+        skView.showsNodeCount = YES;
      
-    // Create and configure the scene.
-    SKScene * scene = [Menu sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+        // Skapan scenen
+        SKScene * scene = [Menu sceneWithSize:skView.bounds.size];
+        scene.scaleMode = SKSceneScaleModeAspectFill;
     
-    // Present the scene.
-    [skView presentScene:scene];
+        // Presentera Scenen
+        [skView presentScene:scene];
+        self.loaded = YES;
+    }
 }
 
 - (BOOL)shouldAutorotate

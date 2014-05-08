@@ -10,8 +10,9 @@
 #import "PlayerPositions.h"
 
 @interface Player : NSObject
-@property (strong, nonatomic) SKShapeNode *activeBall;
+@property (strong, nonatomic) SKNode *activeBall;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
+@property int balls;
 
 //@property CGRect playerArea;
 //@property CGPoint ballStartPoint;
@@ -35,5 +36,6 @@
 -(void)updateDelta;
 -(void)setPoints:(int)newPoints;
 -(void)rotatePositions:(CGPoint)oldPosition;
+-(void)resetPlayerWithBalls:(int)balls;
 
 @end

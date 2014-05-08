@@ -11,9 +11,6 @@
 
 //@property (strong, nonatomic) NSMutableArray *balls;
 @property (strong, nonatomic) UIColor *color;
-@property int balls;
-
-
 
 @end
 
@@ -70,7 +67,7 @@
         NSLog(@"ERROR! -bollar");
     }
     self.balls--;
-    newBall.fillColor = self.color;
+    //newBall.fillColor = self.color; //<-- TODO
     self.activeBall = newBall;
 }
 
@@ -86,6 +83,14 @@
     else {
         return false;
     }
+}
+
+-(void)resetPlayerWithBalls:(int)balls {
+    self.balls = balls;
+    self.holdingBall = NO;
+    self.points = 0;
+    self.usedBalls = [[NSMutableArray alloc] init];
+    
 }
 
 -(void)rotatePositions:(CGPoint)newPosition {

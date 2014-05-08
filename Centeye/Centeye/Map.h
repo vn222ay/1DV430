@@ -11,7 +11,7 @@
 
 @interface Map : SKNode<MapProtocol>
 
-@property CGPathRef restrictedArea;
+@property UIBezierPath *restrictedArea;
 
 -(SKNode *)initWithSize:(CGSize)rectSize;
 -(BOOL)shouldRelease:(CGPoint)position;

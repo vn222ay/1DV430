@@ -16,13 +16,13 @@
 
 @property (strong, nonatomic) NSMutableArray *players;
 @property (strong, nonatomic) Map<MapProtocol> *map;
-@property (strong, nonatomic) NSDate *lastTouchTime;
 @property CFTimeInterval toNextCheck;
 @property (strong, nonatomic) NSDictionary *pointAreas;
 @property int nextPlayerId;
 @property BOOL newBallAway;
 @property BOOL gameOverNow;
 @property (strong, nonatomic) GameSettings *gameSettings;
+@property BOOL scoreCalculated;
 
 @end
 
@@ -40,7 +40,11 @@
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.lastTouchTime = [NSDate date];
+    [self initNewGame];
+}
+
+- (void)initNewGame {
+    
     self.gameSettings = [self.userData objectForKey:@"gameSettings"];
     
     if (self.gameSettings.useWalls) {
@@ -48,24 +52,24 @@
         self.physicsWorld.gravity = CGVectorMake(0, 0);
     }
     
-    //NSLog(@"%@", [self.userData objectForKey:@"gameSettings"]);
+    self.scoreCalculated = NO;
     
-    //self.physicsBody.friction = 0.2;
-    //self.physicsBody.linearDamping = 0;
-    //self.physicsBody.restitution = 0.1;
-    //self.physicsWorld.contactDelegate = self;
+    SKTexture *backback = [SKTexture textureWithImageNamed:@"tronbg.png"];
+    SKSpriteNode *back = [SKSpriteNode spriteNodeWithTexture:backback];
+    back.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    [self addChild:back];
     
-
     
-    self.players = [[NSMutableArray alloc] init];
     self.map = [[Map alloc] initWithSize:self.view.bounds.size];
     [self addChild:self.map];
     self.pointAreas = [self.map getPointAreas];
     self.gameOverNow = NO;
     self.toNextCheck = 0;
-    
     self.nextPlayerId = 0;
     self.newBallAway = NO;
+
+
+    self.players = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.gameSettings.numberOfPlayers; i++) {
         if (self.gameSettings.numberOfPlayers == 2 && i == 1) {
@@ -74,8 +78,8 @@
         }
         Player *player = [[Player alloc] initWithColor:[self.map colorForPlayerNr:i] balls:(int)self.gameSettings.balls];
         player.playerPositions = [[PlayerPositions alloc] initWithPlayerNr:i onViewSize:self.view.bounds.size];
-//        player.playerArea = [self.map areaForPlayerNr:i];
-   //     player.ballStartPoint = [self.map startPointForPlayerNr:i];
+        //        player.playerArea = [self.map areaForPlayerNr:i];
+        //     player.ballStartPoint = [self.map startPointForPlayerNr:i];
         [self.players addObject:player];
         if (!self.gameSettings.oneByOne) {
             [self giveBallToPlayer:player];
@@ -85,7 +89,6 @@
         [self giveNextPlayerBall];
     }
     [self initPlayerScores];
-
 }
 
 -(void)initPlayerScores {
@@ -94,8 +97,8 @@
         scoreLabel.name = @"scoreLabel";
         scoreLabel.text = [NSString stringWithFormat:@"%d", player.points];
         scoreLabel.position = player.playerPositions.scoreLabelPoint;
-        scoreLabel.fontColor = [SKColor colorWithRed:0.3 green:0.3 blue:0.7 alpha:0.8];
-        scoreLabel.fontSize = 40;
+        scoreLabel.fontColor = [SKColor colorWithRed:35.0f/255.0f green:166.0f/255.0f blue:208.0f/255.0f alpha:0.8];
+        scoreLabel.fontSize = 50;
         scoreLabel.zPosition = 5;
         //self.infoLabel.hidden = NO;
         scoreLabel.zRotation = player.playerPositions.scoreLabelAngle;
@@ -104,10 +107,35 @@
     }
 }
 
+-(void)restartGame {
+    self.gameOverNow = NO;
+    self.scoreCalculated = NO;
+    for (SKNode *node in self.children) {
+        if ([node.name isEqualToString:@"ball"]) {
+            [node removeFromParent];
+        }
+        if ([node.name isEqualToString:@"gameOverNode"]) {
+            [node removeFromParent];
+        }
+        
+    }
+    for (Player *player in self.players) {
+        [player resetPlayerWithBalls:(int)self.gameSettings.balls];
+        if (!self.gameSettings.oneByOne) {
+            [self giveBallToPlayer:player];
+        }
+    }
+    
+    if (self.gameSettings.oneByOne) {
+        [self giveNextPlayerBall];
+    }
+}
+
 -(void)giveBallToPlayer:(Player *)player {
     if ([player hasBalls]) {
 
         SKShapeNode *ball = [self.map createBallWithPosition:player.playerPositions.ballStartPoint];
+        ball.name = @"ball";
         [player activateBall:ball];
         [self addChild:player.activeBall];
     }
@@ -122,11 +150,6 @@
         NSLog(@"%i", player.points);
     }
 }
-/*
--(BOOL)giveBallDirectly {
-    return !self.gameSettings.oneByOne;
-}
- */
 
 -(void)performBallActionsForPlayer:(Player *)player withVelocity:(CGPoint)velocity andDelta:(CFTimeInterval)delta {
     [self applyForce:velocity affectedNode:player.activeBall withDelta:delta];
@@ -150,7 +173,6 @@
             return NO;
         }
     }
-                NSLog(@"YES!");
     return YES;
 }
 
@@ -178,13 +200,25 @@
     }
 }
 
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *touch in touches) {
         
         CGPoint touchLocation = [touch locationInView:self.view];
         touchLocation = [self convertPointFromView:touchLocation];
         
+        SKSpriteNode *node = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
+        if ([node.name isEqualToString: @"gameoverLabel"]) {
+            [self restartGame];
+        }
+        
         for (Player *player in self.players) {
+
+            //TODO!
+            if (self.gameSettings.useSizeUp) {
+                
+            }
             
             if ([player isInArea:touchLocation] && [player hasActiveBall] && ![self.map shouldRelease:touchLocation]) {
                 
@@ -194,7 +228,6 @@
                 [player.activeBall removeAllActions];
                 player.holdingBall = YES;
             }
-            
         }
     }
 }
@@ -215,12 +248,14 @@
                 [player updateDelta];
                 
                 player.activeBall.position = touchLocation;
+                CFTimeInterval delta = player.delta;
                 if ([self.map shouldRelease:touchLocation]) { //Fix för temporära FPS-drop (dock ej under 30 FPS)
-                    CFTimeInterval delta = player.delta;
-                    CGPoint oldPosition = player.oldPosition;
+                    
+                    CGPoint oldPosition = oldLocation; //player.oldPosition;
                 
                     if (delta < 0.01f || delta > 0.03f) { //FPS-problem, ska funka på temp. 30 FPS
                         delta = player.delta + player.oldDelta;
+
                         if (delta < 0.014) {
                             NSLog(@"[TouchesMoved] Big problem!");
                             continue;
@@ -228,8 +263,9 @@
                         oldPosition = player.oldOldPosition;
                         NSLog(@"[TouchesMoved] low FPS detected (%f %f)", player.delta, player.oldDelta);
                     }
-
+                    
                     CGPoint velocity = [self calculateVelocity:delta oldPoint:oldPosition newPoint:touchLocation];
+                    NSLog(@"%f %f %f", velocity.x, velocity.y, delta);
                     [self performBallActionsForPlayer:player withVelocity:velocity andDelta:delta];
                     
                 }
@@ -254,26 +290,6 @@
                 returnAction.timingMode = SKActionTimingEaseInEaseOut;
                 [player.activeBall removeAllActions];
                 [player.activeBall runAction:returnAction withKey:@"return"];
-                /*
-                [player updateDelta];
-                CFTimeInterval delta = player.delta;
-                CGPoint oldPosition = player.oldPosition;
-                if (player.delta < 0.01f || player.delta > 0.03f) { //Fix för temporära FPS-drop (dock ej under 30 FPS)
-                    delta = player.delta + player.oldDelta;
-                    if (delta < 0.014) {
-                        NSLog(@"[TouchesEnded] Big problem!");
-                        continue;
-                    }
-                    oldPosition = player.oldOldPosition;
-                    NSLog(@"[TouchesEnded] low FPS detected (%f %f)", player.delta, player.oldDelta);
-                }
-                player.activeBall.position = touchLocation;
-                //[player updateDelta]; //TODO: Kanske inte todo, men simulatorn uppdaterar väldigt oregelbundet => problem i simulatorn. Funkar perfekt på paddan
-                CGPoint velocity = [self calculateVelocity:delta oldPoint:oldPosition newPoint:touchLocation];
-                    
-                [self performBallActionsForPlayer:player withVelocity:velocity andDelta:delta];
-                NSLog(@"%f", player.delta);
-                 */
             }
         }
     }
@@ -321,11 +337,6 @@
     
         self.nextPlayerId++;
     }
-    /*
-    else {
-        self.gameOverNow = YES;
-    }
-     */
 }
 
 -(void)gameOver {
@@ -339,22 +350,34 @@
         }
     }
     
+    self.scoreCalculated = YES;
+    
+    SKNode *gameOverNode = [SKNode node];
+    gameOverNode.name = @"gameOverNode";
+    
+    [self addChild:gameOverNode];
+    
+    SKSpriteNode *gameOverBackground = [[SKSpriteNode alloc] initWithColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5] size:self.size];
+    gameOverBackground.position = CGPointMake(self.size.width/2, self.size.height/2);
+    [gameOverNode addChild:gameOverBackground];
+    
+    
     SKLabelNode *gameOverLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
-    gameOverLabel.name = @"scoreLabel";
+    gameOverLabel.name = @"gameoverLabel";
     gameOverLabel.text = [NSString stringWithFormat:@"Game Over! Player %d won!", bestPlayerIndex + 1];
     gameOverLabel.position = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    gameOverLabel.fontColor = [SKColor colorWithRed:0.3 green:0.3 blue:0.7 alpha:0.8];
-    gameOverLabel.fontSize = 80;
-    gameOverLabel.zPosition = 8;
+    gameOverLabel.fontColor = [SKColor colorWithRed:0.3 green:0.3 blue:0.7 alpha:1];
+    gameOverLabel.fontSize = 70;
+    //gameOverLabel.zPosition = 8;
     //self.infoLabel.hidden = NO;
-    [self addChild:gameOverLabel];
+    [gameOverNode addChild:gameOverLabel];
 
 }
 
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    if (self.toNextCheck < currentTime) {
+    if (self.toNextCheck < currentTime && !self.scoreCalculated) {
         
         if (self.gameSettings.oneByOne && self.gameSettings.waitUntilStill && self.newBallAway) {
             if ([self allBallsStill]) {
@@ -362,20 +385,17 @@
                 self.newBallAway = NO;
                 [self giveNextPlayerBall];
             }
-            
         }
         [self calculatePoints];
-        self.toNextCheck = currentTime + 0.5;
         
+        self.toNextCheck = currentTime + 0.5;
+
         if (self.gameOverNow) {
             //NSLog(@"Soon!");
             if ([self allBallsStill]) {
                 [self gameOver];
-                self.toNextCheck = currentTime + 1000;
             }
         }
-        
-
     }
 }
 
