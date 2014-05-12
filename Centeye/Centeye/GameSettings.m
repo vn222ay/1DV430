@@ -29,7 +29,7 @@
     self.waitUntilStill = NO;
     self.useWalls = NO;
     self.useSizeUp = NO;
-    self.balls = 1;
+    self.balls = 3;
     [self saveUserDefaults];
 }
 

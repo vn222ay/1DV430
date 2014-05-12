@@ -10,6 +10,7 @@
 #import "Player.h"
 #import "Map.h"
 #import "GameSettings.h"
+#import "Menu.h"
 
 
 @interface MyScene ()
@@ -23,6 +24,7 @@
 @property BOOL gameOverNow;
 @property (strong, nonatomic) GameSettings *gameSettings;
 @property BOOL scoreCalculated;
+@property int currentRound;
 
 @end
 
@@ -66,6 +68,7 @@
     self.gameOverNow = NO;
     self.toNextCheck = 0;
     self.nextPlayerId = 0;
+    self.currentRound = 1;
     self.newBallAway = NO;
 
 
@@ -208,10 +211,7 @@
         CGPoint touchLocation = [touch locationInView:self.view];
         touchLocation = [self convertPointFromView:touchLocation];
         
-        SKSpriteNode *node = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
-        if ([node.name isEqualToString: @"gameoverLabel"]) {
-            [self restartGame];
-        }
+
         
         for (Player *player in self.players) {
 
@@ -282,6 +282,20 @@
         
         CGPoint touchLocation = [touch locationInView:self.view];
         touchLocation = [self convertPointFromView:touchLocation];
+        
+        SKSpriteNode *node = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
+        if ([node.name isEqualToString: @"restartLabel"]) {
+            [self restartGame];
+        }
+        else if ([node.name isEqualToString: @"mainMenuLabel"]) {
+            SKScene *scene = [Menu sceneWithSize:self.view.bounds.size];
+            scene.scaleMode = SKSceneScaleModeAspectFill;
+            
+            SKTransition *transition = [SKTransition moveInWithDirection:SKTransitionDirectionDown duration:0.5]; //[SKTransition flipHorizontalWithDuration:1.0];
+            [self.view presentScene:scene transition:transition];
+        }
+        
+        
 
         for (Player *player in self.players) {
             if ([player isInArea:touchLocation] && [player hasActiveBall] && player.holdingBall && ![self.map shouldRelease:touchLocation]) {
@@ -339,19 +353,9 @@
     }
 }
 
+
 -(void)gameOver {
-    int bestPlayerIndex = 0;
-    int maxPoints = 0;
-    for (int i = 0; i < [self.players count]; i++) {
-        Player *p = [self.players objectAtIndex:i];
-        if (p.points > maxPoints) {
-            bestPlayerIndex = i;
-            maxPoints = p.points;
-        }
-    }
-    
-    self.scoreCalculated = YES;
-    
+    //Main Node and transparent background
     SKNode *gameOverNode = [SKNode node];
     gameOverNode.name = @"gameOverNode";
     
@@ -361,15 +365,77 @@
     gameOverBackground.position = CGPointMake(self.size.width/2, self.size.height/2);
     [gameOverNode addChild:gameOverBackground];
     
+    for (int i = 0; i < [self.players count]; i++) {
+        Player *player = self.players[i];
+        
+        SKLabelNode *roundScore = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
+        roundScore.name = [NSString stringWithFormat:@"player%d", i];
+        roundScore.text = [NSString stringWithFormat:@"Player %d: %d + %d = %d", i + 1, player.points, player.oldPoints, player.points + player.oldPoints];
+        roundScore.position = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2 - ([self.players indexOfObject:player] + 1) * 50);
+        roundScore.fontColor = [self.map colorForPlayerNr:i];
+        roundScore.fontSize = 40;
+        
+        [gameOverNode addChild:roundScore];
+        
+        
+        player.oldPoints += player.points;
+    }
     
-    SKLabelNode *gameOverLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
-    gameOverLabel.name = @"gameoverLabel";
-    gameOverLabel.text = [NSString stringWithFormat:@"Game Over! Player %d won!", bestPlayerIndex + 1];
-    gameOverLabel.position = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    gameOverLabel.fontColor = [SKColor colorWithRed:0.3 green:0.3 blue:0.7 alpha:1];
-    gameOverLabel.fontSize = 70;
+    //Restar / Next "Button"
+    SKLabelNode *restartLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
+    restartLabel.name = @"restartLabel";
+    restartLabel.position = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    restartLabel.fontColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
+    restartLabel.fontSize = 70;
+    
+    //Spelet slut eller bara en omgång?
+    if (self.currentRound < self.gameSettings.numberOfPlayers) {
+        self.currentRound++;
+        self.nextPlayerId = self.currentRound - 1;
+        restartLabel.text = @"Next Round";
+
+        
+    }
+    else {
+        //Game is really over
+        
+        SKLabelNode *gameOverLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
+        gameOverLabel.name = @"gameOverLabel";
+        gameOverLabel.position = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2 + 100);
+        gameOverLabel.fontColor = [SKColor colorWithRed:0.6 green:0.8 blue:0.9 alpha:1];
+        gameOverLabel.fontSize = 70;
+        gameOverLabel.text = @"Game Over!";
+        
+        [gameOverNode addChild:gameOverLabel];
+        
+        NSLog(@"Game over really!");
+        
+        self.nextPlayerId = 0;
+        for (Player *player in self.players) {
+            player.oldPoints = 0;
+        }
+        
+        
+        restartLabel.text = @"Restart";
+    }
+    self.scoreCalculated = YES;
+    
+    
+    
+
     //gameOverLabel.zPosition = 8;
     //self.infoLabel.hidden = NO;
+    [gameOverNode addChild:restartLabel];
+    
+    //Back-knapp
+    
+    SKLabelNode *gameOverLabel = [[SKLabelNode alloc] initWithFontNamed:@"Optima-ExtraBlack"];
+    gameOverLabel.name = @"mainMenuLabel";
+    gameOverLabel.position = CGPointMake(self.view.bounds.size.width/2, 100);
+    gameOverLabel.fontColor = [SKColor colorWithRed:0.2 green:0.8 blue:1 alpha:1];
+    gameOverLabel.fontSize = 40;
+    gameOverLabel.text = @"Main Menu";
+    
     [gameOverNode addChild:gameOverLabel];
 
 }

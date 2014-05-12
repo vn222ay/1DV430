@@ -22,6 +22,7 @@
         self.balls = balls;
         self.holdingBall = NO;
         self.points = 0;
+        self.oldPoints = 0;
         self.usedBalls = [[NSMutableArray alloc] init];
     }
     return self;

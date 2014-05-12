@@ -25,6 +25,7 @@
 @property BOOL holdingBall;
 @property (strong, nonatomic) NSMutableArray *usedBalls;
 @property int points;
+@property int oldPoints;
 @property (strong, nonatomic) PlayerPositions *playerPositions;
 
 -(Player *)initWithColor:(UIColor *)color balls:(int)balls;
